@@ -1,0 +1,693 @@
+openapi: 3.0.3
+info:
+  title: Biblioteca SW API
+  description: |-
+    Essa é a documentação da _API de uma Biblioteca_ desenvolvida para a avaliação da 1ª etapa na disciplina de _Serviços Web_.
+    
+    Acesse:
+    - [Código do projeto no Github](https://github.com/estefaniferlin/biblioteca_SW_API)
+  version: 1.0.11
+servers:
+  - url: http://localhost:3002
+    description: Servidor de desenvolvimento local
+paths:
+  /livro:
+    get:
+      tags:
+        - livro
+      summary: Lista todos os livros
+      responses:
+        '200':
+          description: Uma lista de livros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: integer
+                      example: 1
+                    titulo:
+                      type: string
+                      example: O Alquimista
+                    isbn:
+                      type: string
+                      example: 978-3-16-148410-0
+                    edicao:
+                      type: string
+                      example: 1ª Edição
+                    anopublicacao:
+                      type: integer
+                      example: 1988
+                    quantidade:
+                      type: integer
+                      example: 10
+                    categoria:
+                      type: string
+                      example: Ficção
+                    autor:
+                      type: string
+                      example: Paulo Coelho
+                    editora:
+                      type: string
+                      example: Companhia das Letras
+                    localizacao:
+                      type: object
+                      properties:
+                        estante:
+                          type: integer
+                          example: 5
+                        prateleira:
+                          type: integer
+                          example: 3
+    post:
+      tags:
+        - livro
+      summary: Cria um novo livro
+      requestBody:
+        description: Dados do novo livro
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                  example: O Alquimista
+                isbn:
+                  type: string
+                  example: 978-3-16-148410-0
+                edicao:
+                  type: string
+                  example: 1ª Edição
+                anopublicacao:
+                  type: integer
+                  example: 1988
+                quantidade:
+                  type: integer
+                  example: 10
+                categoria:
+                  type: integer
+                  example: 1
+                autor:
+                  type: integer
+                  example: 2
+                localizacao:
+                  type: integer
+                  example: 3
+                editora:
+                  type: integer
+                  example: 1
+      responses:
+        '201':
+          description: Livro criado com sucesso
+
+    put:
+      tags:
+        - livro
+      summary: Atualiza um livro existente
+      requestBody:
+        description: Dados do livro a ser atualizado
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codigo:
+                  type: integer
+                  example: 1
+                titulo:
+                  type: string
+                  example: O Alquimista
+                isbn:
+                  type: string
+                  example: 978-3-16-148410-0
+                edicao:
+                  type: string
+                  example: 1ª Edição
+                anopublicacao:
+                  type: integer
+                  example: 1988
+                quantidade:
+                  type: integer
+                  example: 10
+                categoria:
+                  type: integer
+                  example: 1
+                autor:
+                  type: integer
+                  example: 2
+                editora:
+                  type: integer
+                  example: 1
+                localizacao:
+                  type: integer
+                  example: 3
+      responses:
+        '200':
+          description: Livro atualizado com sucesso
+
+  /livro/{id}:
+    get:
+      tags:
+        - livro
+      summary: Obtém um livro pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do livro
+      responses:
+        '200':
+          description: Dados do livro
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codigo:
+                    type: integer
+                    example: 1
+                  titulo:
+                    type: string
+                    example: O Alquimista
+                  isbn:
+                    type: string
+                    example: 978-3-16-148410-0
+                  edicao:
+                    type: string
+                    example: 1ª Edição
+                  anopublicacao:
+                    type: integer
+                    example: 1988
+                  quantidade:
+                    type: integer
+                    example: 10
+                  categoria:
+                    type: integer
+                    example: 2
+                  autor:
+                    type: integer
+                    example: 3
+                  editora:
+                    type: integer
+                    example: 1
+                  localizacao:
+                    type: integer
+                    example: 2
+                  Categoria:
+                    type: object
+                    properties:
+                        nome:
+                          type: string
+                          example: Ficção
+                  Editora:
+                    type: object
+                    properties:
+                        nome:
+                          type: string
+                          example: Companhia das Letras
+                  Localizacao:
+                    type: object
+                    properties:
+                      estante:
+                        type: integer
+                        example: 5
+                      prateleira:
+                        type: integer
+                        example: 3
+                  Autor:
+                    type: object
+                    properties:
+                      nome:
+                        type: string
+                        example: Raphael Montes
+                    
+        '404':
+          description: Livro não encontrado
+
+    delete:
+      tags:
+        - livro
+      summary: Deleta um livro pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do livro a ser deletado
+      responses:
+        '204':
+          description: Livro deletado com sucesso
+        '404':
+          description: Livro não encontrado
+  /categoria:
+    get:
+      tags:
+        - categoria
+      summary: Lista todos as categorias
+      responses:
+        '200':
+          description: Uma lista de categorias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: integer
+                      example: 1
+                    nome:
+                      type: string
+                      example: Romance
+    post:
+      tags:
+        - categoria
+      summary: Cria uma nova categoria
+      requestBody:
+        description: Dados da nova categoria
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: Romance
+      responses:
+        '201':
+          description: Categoria criada com sucesso
+
+    put:
+      tags:
+        - categoria
+      summary: Atualiza uma categoria existente
+      requestBody:
+        description: Dados da categoria a ser atualizada
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codigo:
+                  type: integer
+                  example: 1
+                nome:
+                  type: string
+                  example: Romance atualizado
+      responses:
+        '200':
+          description: Categoria atualizada com sucesso
+
+  /categoria/{id}:
+    get:
+      tags:
+        - categoria
+      summary: Obtém uma categoria pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da categoria
+      responses:
+        '200':
+          description: Dados da categoria
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codigo:
+                    type: integer
+                    example: 1
+                  nome:
+                    type: string
+                    example: Romance
+        '404':
+          description: Categoria não encontrada
+
+    delete:
+      tags:
+        - categoria
+      summary: Deleta uma categoria pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da categoria a ser deletada
+      responses:
+        '204':
+          description: Categoria deletada com sucesso
+        '404':
+          description: Categoria não encontrada
+          
+  /autor:
+    get:
+      tags:
+        - autor
+      summary: Lista todos os autores
+      responses:
+        '200':
+          description: Uma lista de autores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: integer
+                      example: 1
+                    nome:
+                      type: string
+                      example: Raphael Montes
+    post:
+      tags:
+        - autor
+      summary: Cria um novo autor
+      requestBody:
+        description: Dados do novo autor
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: Raphael Montes
+      responses:
+        '201':
+          description: Autor criado com sucesso
+
+    put:
+      tags:
+        - autor
+      summary: Atualiza um autor existente
+      requestBody:
+        description: Dados do autor a ser atualizado
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codigo:
+                  type: integer
+                  example: 1
+                nome:
+                  type: string
+                  example: Raphael Montes
+      responses:
+        '200':
+          description: Autor atualizado com sucesso
+
+  /autor/{id}:
+    get:
+      tags:
+        - autor
+      summary: Obtém um autor pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do autor
+      responses:
+        '200':
+          description: Dados do autor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codigo:
+                    type: integer
+                    example: 1
+                  nome:
+                    type: string
+                    example: Raphael Montes
+        '404':
+          description: Autor não encontrado
+
+    delete:
+      tags:
+        - autor
+      summary: Deleta um autor pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do autor a ser deletado
+      responses:
+        '204':
+          description: Autor deletado com sucesso
+        '404':
+          description: Autor não encontrado
+
+  /editora:
+    get:
+      tags:
+        - editora
+      summary: Lista todas as editoras
+      responses:
+        '200':
+          description: Uma lista de editoras
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: integer
+                      example: 1
+                    nome:
+                      type: string
+                      example: Companhia das Letras
+    post:
+      tags:
+        - editora
+      summary: Cria uma nova editora
+      requestBody:
+        description: Dados da nova editora
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: Companhia das Letras
+      responses:
+        '201':
+          description: Editora criada com sucesso
+
+    put:
+      tags:
+        - editora
+      summary: Atualiza uma editora existente
+      requestBody:
+        description: Dados da editora a ser atualizada
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codigo:
+                  type: integer
+                  example: 1
+                nome:
+                  type: string
+                  example: Companhia das Letras
+      responses:
+        '200':
+          description: Editora atualizada com sucesso
+
+  /editora/{id}:
+    get:
+      tags:
+        - editora
+      summary: Obtém uma editora pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da editora
+      responses:
+        '200':
+          description: Dados da editora
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codigo:
+                    type: integer
+                    example: 1
+                  nome:
+                    type: string
+                    example: Companhia das Letras
+        '404':
+          description: Editora não encontrada
+
+    delete:
+      tags:
+        - editora
+      summary: Deleta uma editora pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da editora a ser deletada
+      responses:
+        '204':
+          description: Editora deletada com sucesso
+        '404':
+          description: Editora não encontrada
+          
+  /localizacao:
+    get:
+      tags:
+        - localizacao
+      summary: Lista todas as localizações
+      responses:
+        '200':
+          description: Uma lista de localizações
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: integer
+                      example: 1
+                    estante:
+                      type: integer
+                      example: 5
+                    prateleira:
+                      type: integer
+                      example: 3
+    post:
+      tags:
+        - localizacao
+      summary: Cria uma nova localização
+      requestBody:
+        description: Dados da nova localização
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                estante:
+                  type: integer
+                  example: 5
+                prateleira:
+                  type: integer
+                  example: 3
+      responses:
+        '201':
+          description: Localização criada com sucesso
+
+    put:
+      tags:
+        - localizacao
+      summary: Atualiza uma localização existente
+      requestBody:
+        description: Dados da localização a ser atualizada
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codigo:
+                  type: integer
+                  example: 1
+                estante:
+                  type: integer
+                  example: 5
+                prateleira:
+                  type: integer
+                  example: 3
+      responses:
+        '200':
+          description: Localização atualizada com sucesso
+
+  /localizacao/{id}:
+    get:
+      tags:
+        - localizacao
+      summary: Obtém uma localização pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da localização
+      responses:
+        '200':
+          description: Dados da localização
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codigo:
+                    type: integer
+                    example: 1
+                  estante:
+                    type: integer
+                    example: 5
+                  prateleira:
+                    type: integer
+                    example: 3
+        '404':
+          description: Localização não encontrada
+
+    delete:
+      tags:
+        - localizacao
+      summary: Deleta uma localização pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da localização a ser deletada
+      responses:
+        '204':
+          description: Localização deletada com sucesso
+        '404':
+          description: Localização não encontrada
